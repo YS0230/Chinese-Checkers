@@ -1,0 +1,18 @@
+# Render Blueprint：單一 Node.js Web Service（前端靜態檔 + Socket.IO 由同一服務提供）
+# 注意：所有遊戲狀態存在記憶體，請保持單一實例，勿水平擴展。
+services:
+  - type: web
+    name: starry-chinese-checkers
+    runtime: node
+    plan: free
+    region: singapore
+    buildCommand: npm ci --include=dev && npm run build
+    startCommand: npm start
+    healthCheckPath: /health
+    numInstances: 1
+    autoDeploy: true
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: NODE_VERSION
+        value: 22.15.0

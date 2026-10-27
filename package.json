@@ -1,0 +1,29 @@
+{
+  "name": "starry-chinese-checkers",
+  "version": "1.0.0",
+  "private": true,
+  "description": "星際彈珠中國跳棋 — 多人線上中國跳棋（React + Socket.IO，無資料庫）",
+  "type": "module",
+  "workspaces": [
+    "shared",
+    "backend",
+    "frontend"
+  ],
+  "engines": {
+    "node": ">=20.11"
+  },
+  "scripts": {
+    "build:shared": "npm run build -w shared",
+    "build": "npm run build -w shared && npm run build -w backend && npm run build -w frontend",
+    "start": "node backend/dist/index.js",
+    "dev": "npm run build:shared && concurrently -k -n server,web -c magenta,cyan \"npm run dev -w backend\" \"npm run dev -w frontend\"",
+    "test": "npm run build:shared && vitest run",
+    "test:watch": "vitest",
+    "typecheck": "npm run build:shared && npm run typecheck -w backend && npm run typecheck -w frontend"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.0",
+    "typescript": "~5.6.3",
+    "vitest": "^2.1.8"
+  }
+}

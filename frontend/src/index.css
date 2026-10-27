@@ -1,0 +1,155 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-left: env(safe-area-inset-left, 0px);
+  --safe-right: env(safe-area-inset-right, 0px);
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  @apply bg-space-950 font-sans text-white antialiased;
+  margin: 0;
+  overflow-x: hidden;
+  -webkit-tap-highlight-color: transparent;
+  overscroll-behavior: none;
+  background:
+    radial-gradient(1200px 700px at 15% 10%, rgba(124, 58, 237, 0.35), transparent 60%),
+    radial-gradient(900px 600px at 85% 20%, rgba(45, 212, 191, 0.18), transparent 60%),
+    radial-gradient(1000px 800px at 50% 110%, rgba(236, 72, 153, 0.2), transparent 60%),
+    linear-gradient(180deg, #05041a 0%, #0a0830 50%, #0c0626 100%);
+  background-attachment: fixed;
+}
+
+button {
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.app-shell {
+  min-height: 100dvh;
+  padding: var(--safe-top) var(--safe-right) var(--safe-bottom) var(--safe-left);
+}
+
+@layer components {
+  .glass {
+    @apply rounded-3xl border border-white/15 bg-white/[0.07] shadow-[0_8px_40px_rgba(0,0,0,0.45)] backdrop-blur-xl;
+  }
+  .glass-strong {
+    @apply rounded-3xl border border-white/20 bg-space-900/80 shadow-[0_8px_40px_rgba(0,0,0,0.55)] backdrop-blur-xl;
+  }
+  .btn {
+    @apply relative inline-flex min-h-[44px] items-center justify-center gap-2 rounded-2xl px-5 py-2.5 font-semibold
+      tracking-wide transition duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aurora/80
+      disabled:cursor-not-allowed disabled:opacity-50 active:scale-[0.97];
+  }
+  .btn-primary {
+    @apply btn text-white shadow-glow;
+    background: linear-gradient(135deg, #7c3aed 0%, #c026d3 50%, #f59e0b 120%);
+    border: 1px solid rgba(255, 255, 255, 0.35);
+  }
+  .btn-primary:not(:disabled):hover {
+    filter: brightness(1.12);
+    box-shadow: 0 0 32px rgba(192, 38, 211, 0.6);
+  }
+  .btn-teal {
+    @apply btn text-space-950 shadow-glow-teal;
+    background: linear-gradient(135deg, #5eead4 0%, #22d3ee 60%, #818cf8 130%);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+  }
+  .btn-teal:not(:disabled):hover {
+    filter: brightness(1.08);
+  }
+  .btn-gold {
+    @apply btn text-space-950 shadow-glow-gold;
+    background: linear-gradient(135deg, #fde68a 0%, #fbbf24 50%, #f97316 130%);
+    border: 1px solid rgba(255, 255, 255, 0.55);
+  }
+  .btn-gold:not(:disabled):hover {
+    filter: brightness(1.08);
+  }
+  .btn-ghost {
+    @apply btn border border-white/20 bg-white/[0.06] text-white/90 hover:border-white/40 hover:bg-white/[0.12];
+  }
+  .btn-danger {
+    @apply btn border border-rose-300/40 bg-rose-500/20 text-rose-100 hover:bg-rose-500/35;
+  }
+  .icon-btn {
+    @apply inline-flex h-11 w-11 items-center justify-center rounded-2xl border border-white/20 bg-white/[0.07]
+      text-white/90 transition hover:bg-white/[0.15] active:scale-95 focus-visible:outline-none focus-visible:ring-2
+      focus-visible:ring-aurora/80 disabled:opacity-40;
+  }
+  .field {
+    @apply w-full rounded-2xl border border-white/20 bg-space-950/60 px-4 py-3 text-base text-white
+      placeholder:text-white/35 outline-none transition focus:border-aurora/80 focus:ring-2 focus:ring-aurora/30;
+  }
+  .chip {
+    @apply inline-flex items-center gap-1 rounded-full border px-2.5 py-0.5 text-xs font-semibold;
+  }
+  .title-gradient {
+    background: linear-gradient(100deg, #fde68a 0%, #f0abfc 35%, #a5f3fc 65%, #fde68a 100%);
+    background-size: 200% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+}
+
+/* 合法落點脈衝光圈 */
+@keyframes target-pulse {
+  0% { transform: scale(0.6); opacity: 0.95; }
+  100% { transform: scale(1.6); opacity: 0; }
+}
+.target-pulse {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: target-pulse 1.3s ease-out infinite;
+}
+
+@keyframes select-spin {
+  to { transform: rotate(360deg); }
+}
+.select-ring {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: select-spin 4s linear infinite;
+}
+
+@keyframes goal-breathe {
+  0%, 100% { opacity: 0.35; }
+  50% { opacity: 0.8; }
+}
+.goal-breathe {
+  animation: goal-breathe 2.6s ease-in-out infinite;
+}
+
+.board-scroll {
+  touch-action: manipulation;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+}
+.board-scroll.zoomed {
+  touch-action: pan-x pan-y;
+}
+
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { scrollbar-width: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+  .target-pulse { animation: none; opacity: 0.8; }
+}
